@@ -56,7 +56,23 @@ public class EventNotificationTest {
         }
     }
 
+    @Test
+    public void checkIfAtendesReceiveConfirmationMsg(){
+        Event event = new Event();
+        Attendee attende = new Attendee(1L,"sara","sara@example.com");
+
+        event.addAttendee(attende);
+
+        eventNotificationService.confirmAttendance(event,attende);
+
+        List <Notification> notifications = attende.getNotifications();
+
+        for (Notification notification : notifications) {
+            assertEquals("Dear Attendee, your subscription to the event has been confirmed successfully.",notification.getMessage());
+        }
+    }
 }
+
 
 
 
