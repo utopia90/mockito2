@@ -1,7 +1,13 @@
 import com.example.Attendee;
 import com.example.Event;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.argThat;
+import static org.mockito.Mockito.verify;
 
+import com.example.EventType;
+import com.example.Notification;
+import com.example.service.EventNotificationService;
+import com.example.service.EventNotificationServiceImpl;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -69,5 +75,20 @@ public class EventTest {
 
         assertFalse(event.getAttendees().contains(attendees));
 
+    }
+    @Test
+    @DisplayName("Check if event notify Assistants")
+    public void notifyAssistants(){
+        EventNotificationService eventNotificationService = new EventNotificationServiceImpl();
+        Event event = new Event(1L,"Advanced Java Event", EventType.TECH, eventNotificationService);
+        Attendee attendee = new Attendee(1L, "Macarena", "macarena@gmail.com");
+        event.addAttendee(attendee);
+        event.notifyAssistants();
+        List<Notification> notifications = attendee.getNotifications();
+
+        for (Notification notification : notifications) {
+            assertEquals("The next big event is coming!", notification.getMessage());
+
+        }
     }
 }
