@@ -1,11 +1,9 @@
-import com.example.Attendee;
-import com.example.Event;
+import com.example.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.verify;
 
-import com.example.EventType;
-import com.example.Notification;
 import com.example.service.EventNotificationService;
 import com.example.service.EventNotificationServiceImpl;
 import org.jetbrains.annotations.NotNull;
@@ -90,5 +88,14 @@ public class EventTest {
             assertEquals("The next big event is coming!", notification.getMessage());
 
         }
+    }
+
+    @Test
+    @DisplayName("check if add speaker")
+    public void addSpeaker(){
+        Speaker speaker = new Speaker(1L,"Alan", "Java");
+        Event event = new Event();
+
+        event.addSpeaker(speaker);
     }
 }
