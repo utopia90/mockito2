@@ -1,8 +1,13 @@
 import com.example.Attendee;
 import com.example.Event;
 import static org.junit.jupiter.api.Assertions.*;
+
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.*;
+import java.util.Arrays;
 
 public class EventTest {
     @Test
@@ -24,4 +29,19 @@ public class EventTest {
         assertFalse(event.getAttendees().contains(attendee));
     }
 
+    @Test
+    @DisplayName("Check add multiple attendees")
+    public void addAttendees() {
+        Event event = new Event();
+        List<Attendee> attendees = Arrays.asList(
+                new Attendee(1L, "sofia", "sofia@example.com"),
+                new Attendee(2L, "erik", "erik@example.com"),
+                new Attendee(3L, "maría", "maria@example.com")
+        );
+
+        event.addAttendees(attendees);
+
+        assertTrue(event.getAttendees().containsAll(attendees));
+
+    }
 }
