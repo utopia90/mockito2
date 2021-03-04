@@ -97,5 +97,18 @@ public class EventTest {
         Event event = new Event();
 
         event.addSpeaker(speaker);
+        assertTrue(event.getSpeakers().contains(speaker));
+
+    }
+    @Test
+    @DisplayName("check if remove speaker")
+    public void removeSpeaker(){
+        Speaker speaker = new Speaker(1L,"Alan", "Java");
+        Event event = new Event();
+        event.addSpeaker(speaker);
+        event.removeSpeaker(speaker);
+
+        assertFalse(event.getSpeakers().contains(speaker));
+
     }
 }
