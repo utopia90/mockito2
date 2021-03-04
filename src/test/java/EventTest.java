@@ -12,5 +12,16 @@ public class EventTest {
         Attendee attendee = new Attendee(1L,"Roberto", "roberto@example.com");
         event.addAttendee(attendee);
         assertTrue(event.getAttendees().contains(attendee));
+
     }
+    @Test
+    @DisplayName("Check dont add null attendes")
+    public void createNullAttendee(){
+        Event event = new Event();
+        Attendee attendee = null;
+        event.addAttendee(attendee);
+
+        assertFalse(event.getAttendees().contains(attendee));
+    }
+
 }
