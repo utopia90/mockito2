@@ -44,4 +44,15 @@ public class EventTest {
         assertTrue(event.getAttendees().containsAll(attendees));
 
     }
+    @Test
+    @DisplayName("Check if remove attendees")
+    public void removeAttendee(){
+        Event event = new Event();
+        Attendee attendee = new Attendee(1L,"Marta","marta@example.com");
+        event.addAttendee(attendee);
+        event.removeAttendee(attendee);
+
+        assertFalse(event.getAttendees().contains(attendee));
+
+    }
 }
