@@ -42,8 +42,8 @@ public class EventNotificationTest {
 
     @Test
     public void checkIfAttendesAreNotified() {
-        Event event = new Event();
-        Attendee attende = new Attendee(1L, "sara", "sara@example.com");
+         event = new Event();
+         attende = new Attendee(1L, "sara", "sara@example.com");
 
         event.addAttendee(attende);
         eventNotificationService.announce(event);
@@ -58,8 +58,8 @@ public class EventNotificationTest {
 
     @Test
     public void checkIfAtendesReceiveConfirmationMsg(){
-        Event event = new Event();
-        Attendee attende = new Attendee(1L,"sara","sara@example.com");
+         event = new Event();
+         attende = new Attendee(1L,"sara","sara@example.com");
 
         event.addAttendee(attende);
 
