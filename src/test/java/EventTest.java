@@ -45,7 +45,7 @@ public class EventTest {
 
     }
     @Test
-    @DisplayName("Check if remove attendees")
+    @DisplayName("Check if remove attendee")
     public void removeAttendee(){
         Event event = new Event();
         Attendee attendee = new Attendee(1L,"Marta","marta@example.com");
@@ -53,6 +53,21 @@ public class EventTest {
         event.removeAttendee(attendee);
 
         assertFalse(event.getAttendees().contains(attendee));
+
+    }
+    @Test
+    @DisplayName("Check if remove multiple attendees")
+    public void removeAttendees(){
+        Event event = new Event();
+        List<Attendee> attendees = Arrays.asList(
+                new Attendee(1L, "sofia", "sofia@example.com"),
+                new Attendee(2L, "erik", "erik@example.com"),
+                new Attendee(3L, "maría", "maria@example.com")
+        );
+        event.addAttendees(attendees);
+        event.removeAttendees(attendees);
+
+        assertFalse(event.getAttendees().contains(attendees));
 
     }
 }
