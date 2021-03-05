@@ -124,4 +124,22 @@ public class EventTest {
         event.setTitle("Java event");
         assertEquals("Java event",event.getTitle());
     }
+    @Test
+    @DisplayName("check if set & return Type")
+    public void getType(){
+        Event event = new Event();
+        event.setType(EventType.TECH);
+        assertEquals(EventType.TECH,event.getType());
+    }
+    @Test
+    @DisplayName("check if set & return speakers")
+    public void getSpeakers(){
+        Event event = new Event();
+        List<Speaker> speakers = Arrays.asList(
+             new Speaker(1L,"Marcos","Java"),
+                new Speaker(1L,"Lola","Junit")
+        );
+        event.setSpeakers(speakers);
+        assertEquals(speakers,event.getSpeakers());
+    }
 }
