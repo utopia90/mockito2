@@ -1,12 +1,10 @@
 import com.example.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.argThat;
-import static org.mockito.Mockito.verify;
 
 import com.example.service.EventNotificationService;
 import com.example.service.EventNotificationServiceImpl;
-import org.jetbrains.annotations.NotNull;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -109,6 +107,15 @@ public class EventTest {
         event.removeSpeaker(speaker);
 
         assertFalse(event.getSpeakers().contains(speaker));
+
+    }
+
+    @Test
+    @DisplayName("check if return ID")
+    public void getID(){
+        Event event = new Event();
+        event.setId(1L);
+        assertEquals(1L,event.getId());
 
     }
 }

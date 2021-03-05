@@ -42,18 +42,24 @@ public class EventNotificationTest {
 
     @Test
     public void checkIfAttendesAreNotified() {
-         event = new Event();
-         attende = new Attendee(1L, "sara", "sara@example.com");
 
+        event = new Event();
+        attende = new Attendee(1L, "Sara", "sara@example.com");
         event.addAttendee(attende);
+
         eventNotificationService.announce(event);
+
 
         List<Notification> notifications = attende.getNotifications();
 
+
         for (Notification notification : notifications) {
+
             assertEquals("The next big event is coming!", notification.getMessage());
 
         }
+
+
     }
 
     @Test
