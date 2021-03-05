@@ -111,11 +111,17 @@ public class EventTest {
     }
 
     @Test
-    @DisplayName("check if return ID")
+    @DisplayName("check if set & return ID")
     public void getID(){
         Event event = new Event();
         event.setId(1L);
         assertEquals(1L,event.getId());
-
+    }
+    @Test
+    @DisplayName("check if set & return Title")
+    public void getTitle(){
+        Event event = new Event();
+        event.setTitle("Java event");
+        assertEquals("Java event",event.getTitle());
     }
 }
