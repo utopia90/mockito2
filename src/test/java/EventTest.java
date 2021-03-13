@@ -98,7 +98,6 @@ public class EventTest {
         event.addAttendees(attendees);
         event.addAttendees(attendees);
 
-
         assertTrue(event.getAttendees().size() == 3);
 
     }
@@ -137,6 +136,17 @@ public class EventTest {
 
     }
     @Test
+    @DisplayName("check dont add null speakers")
+    public void addNullSpeaker(){
+        Speaker speaker = null;
+        Event event = new Event();
+
+        event.addSpeaker(speaker);
+        assertTrue(event.getSpeakers().size() == 0);
+    }
+
+
+    @Test
     @DisplayName("check if remove speaker")
     public void removeSpeaker(){
         Speaker speaker = new Speaker(1L,"Alan", "Java");
@@ -145,8 +155,6 @@ public class EventTest {
         event.removeSpeaker(speaker);
 
         assertTrue(event.getSpeakers().size() == 0);
-
-
     }
 
     @Test
