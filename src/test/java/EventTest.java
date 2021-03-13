@@ -7,9 +7,13 @@ import com.example.service.EventNotificationServiceImpl;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.*;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.*;
 import java.util.Arrays;
+import java.util.jar.JarOutputStream;
 
 public class EventTest {
     @Test
@@ -18,7 +22,8 @@ public class EventTest {
         Event event = new Event();
         Attendee attendee = new Attendee(1L,"Roberto", "roberto@example.com");
         event.addAttendee(attendee);
-        assertTrue(event.getAttendees().contains(attendee));
+
+        assertEquals("Roberto", event.getAttendees().get(0).getNickname());
 
     }
     @Test
@@ -28,7 +33,17 @@ public class EventTest {
         Attendee attendee = null;
         event.addAttendee(attendee);
 
-        assertFalse(event.getAttendees().contains(attendee));
+        assertTrue(event.getAttendees().size() == 0);
+    }
+    @Test
+    @DisplayName("Check dont add attendes already registered")
+    public void createDoubleAttendee(){
+        Event event = new Event();
+        Attendee attendee = new Attendee(1L,"Maria", "maria@example.com");
+        event.addAttendee(attendee);
+        event.addAttendee(attendee);
+
+        assertTrue(event.getAttendees().size() == 1);
     }
 
     @Test
@@ -43,7 +58,7 @@ public class EventTest {
 
         event.addAttendees(attendees);
 
-        assertTrue(event.getAttendees().containsAll(attendees));
+        assertTrue(event.getAttendees().size() == 3);
 
     }
     @Test
@@ -53,8 +68,7 @@ public class EventTest {
         Attendee attendee = new Attendee(1L,"Marta","marta@example.com");
         event.addAttendee(attendee);
         event.removeAttendee(attendee);
-
-        assertFalse(event.getAttendees().contains(attendee));
+        assertTrue(event.getAttendees().size() == 0);
 
     }
     @Test
@@ -69,23 +83,47 @@ public class EventTest {
         event.addAttendees(attendees);
         event.removeAttendees(attendees);
 
-        assertFalse(event.getAttendees().contains(attendees));
+        assertTrue(event.getAttendees().size() == 0);
 
     }
     @Test
+    @DisplayName("Check dont add multiple attendees already registered")
+    public void CreateDoubleAttendees(){
+        Event event = new Event();
+        List<Attendee> attendees = Arrays.asList(
+                new Attendee(1L, "sofia", "sofia@example.com"),
+                new Attendee(2L, "erik", "erik@example.com"),
+                new Attendee(3L, "maría", "maria@example.com")
+        );
+        event.addAttendees(attendees);
+        event.addAttendees(attendees);
+
+
+        assertTrue(event.getAttendees().size() == 3);
+
+    }
+    @Mock
+    EventNotificationService eventNotificationService;
+
+    @InjectMocks
+    Event event;
+
+    @Test
     @DisplayName("Check if event notify Assistants")
+    @ExtendWith(MockitoExtension.class)
     public void notifyAssistants(){
-        EventNotificationService eventNotificationService = new EventNotificationServiceImpl();
-        Event event = new Event(1L,"Advanced Java Event", EventType.TECH, eventNotificationService);
-        Attendee attendee = new Attendee(1L, "Macarena", "macarena@gmail.com");
-        event.addAttendee(attendee);
+
+     event.setId(1L);
+     event.setTitle("Java event");
+     event.setType(EventType.TECH);
+
         event.notifyAssistants();
-        List<Notification> notifications = attendee.getNotifications();
+        ArgumentCaptor<Event> eventCaptor = ArgumentCaptor.forClass(Event.class);
 
-        for (Notification notification : notifications) {
-            assertEquals("The next big event is coming!", notification.getMessage());
+        Mockito.verify(eventNotificationService).announce(eventCaptor.capture());
 
-        }
+        assertEquals(EventType.TECH, eventCaptor.getValue().getType());
+
     }
 
     @Test
@@ -95,7 +133,7 @@ public class EventTest {
         Event event = new Event();
 
         event.addSpeaker(speaker);
-        assertTrue(event.getSpeakers().contains(speaker));
+        assertTrue(event.getSpeakers().get(0).getId() == 1);
 
     }
     @Test
@@ -106,7 +144,8 @@ public class EventTest {
         event.addSpeaker(speaker);
         event.removeSpeaker(speaker);
 
-        assertFalse(event.getSpeakers().contains(speaker));
+        assertTrue(event.getSpeakers().size() == 0);
+
 
     }
 
